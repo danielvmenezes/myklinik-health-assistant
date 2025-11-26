@@ -52,11 +52,11 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await response.json();
-    
+
     // Extract confirmation messages
     const confirmationEn = data.rows?.[0]?.columns?.confirmation_message_en?.choices?.[0]?.message?.content;
     const confirmationMs = data.rows?.[0]?.columns?.confirmation_message_ms?.choices?.[0]?.message?.content;
-    
+
     if (!confirmationEn || !confirmationMs) {
       console.error("Failed to extract confirmation. Full response:", JSON.stringify(data, null, 2));
       return NextResponse.json(
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
     // Return confirmation in requested language
     const confirmation = language === "ms" ? confirmationMs : confirmationEn;
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
       confirmation,
       confirmationEn,
