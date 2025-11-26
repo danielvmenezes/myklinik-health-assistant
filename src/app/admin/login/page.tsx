@@ -73,16 +73,22 @@ export default function AdminLogin() {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full">
               <Lock className="w-8 h-8 text-blue-700" />
             </div>
-            <button
-              type="button"
-              onClick={() => setLang(lang === "en" ? "ms" : "en")}
-              className="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium text-gray-800"
-            >
-              {lang === "en" ? "BM" : "EN"}
-            </button>
-          </div>
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-            <Lock className="w-8 h-8 text-blue-700" />
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => router.push("/")}
+                className="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium text-gray-800"
+              >
+                {lang === "en" ? "Home" : "Laman Utama"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setLang(lang === "en" ? "ms" : "en")}
+                className="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium text-gray-800"
+              >
+                {lang === "en" ? "BM" : "EN"}
+              </button>
+            </div>
           </div>
           <h1 className="text-2xl font-bold text-gray-900">{t.portal}</h1>
           <p className="text-gray-700 mt-2">{t.product}</p>
@@ -149,7 +155,7 @@ export default function AdminLogin() {
         <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
           <p className="text-xs text-gray-800 font-medium mb-2">{t.demo}</p>
           <div className="space-y-1 text-xs text-gray-900">
-            <p><strong>{t.admin}:</strong> admin / MyDoctor2025!</p>
+            <p><strong>{t.admin}:</strong> admin / MyDoctor2025</p>
             <p><strong>{t.staff}:</strong> staff / Staff@123</p>
           </div>
         </div>
