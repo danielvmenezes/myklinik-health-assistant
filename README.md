@@ -1,4 +1,4 @@
-# myKlinik Health Assistant | Pembantu Kesihatan myKlinik
+# MyDoctor Health Assistant | Pembantu Kesihatan MyDoctor
 
 A bilingual (English/Bahasa Malaysia) health chatbot and appointment booking system for Malaysian government clinics, powered by JamAI Base.
 

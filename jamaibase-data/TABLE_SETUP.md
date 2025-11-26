@@ -1,7 +1,7 @@
-# JamAI Base Table Setup for myKlinik Health Assistant
+# JamAI Base Table Setup for MyDoctor Health Assistant
 
 ## Overview
-This document describes the JamAI Base table architecture for the myKlinik health chatbot and appointment booking system.
+This document describes the JamAI Base table architecture for the MyDoctor health chatbot and appointment booking system.
 
 ---
 
@@ -290,7 +290,7 @@ ${User}
 
 ## 🔗 Multi-Table Orchestration (Chained Steps)
 
-The myKlinik system demonstrates sophisticated multi-table orchestration following the hackathon requirement: **"Use Action/Generative tables to chain steps like: understand request → fetch or retrieve data → draft answer → refine"**
+The MyDoctor system demonstrates sophisticated multi-table orchestration following the hackathon requirement: **"Use Action/Generative tables to chain steps like: understand request → fetch or retrieve data → draft answer → refine"**
 
 ### Workflow for Chat Message:
 

@@ -1,7 +1,7 @@
-# myKlinik Health Assistant - Hackathon Submission Summary
+# MyDoctor Health Assistant - Hackathon Submission Summary
 
 ## 🎯 Project Overview
-**Name**: myKlinik Health Assistant | Pembantu Kesihatan myKlinik  
+**Name**: MyDoctor Health Assistant | Pembantu Kesihatan MyDoctor  
 **Category**: Service/Helpdesk Bot for Healthcare Sector  
 **Target**: Government clinics in Malaysia (Klinik Kesihatan)  
 **Tech Stack**: Next.js 14 + JamAI Base (4 tables: 1 Knowledge, 2 Action, 1 Chat)
