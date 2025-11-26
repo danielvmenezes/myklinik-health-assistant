@@ -10,6 +10,30 @@ export default function AdminLogin() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [lang, setLang] = useState<"en" | "ms">("en");
+
+  const t = {
+    en: {
+      portal: "Admin Portal",
+      product: "MyDoctor Health Assistant",
+      username: "Username",
+      password: "Password",
+      signIn: "Sign In",
+      demo: "Demo Credentials:",
+      admin: "Admin",
+      staff: "Staff",
+    },
+    ms: {
+      portal: "Portal Admin",
+      product: "Pembantu Kesihatan MyDoctor",
+      username: "Nama Pengguna",
+      password: "Kata Laluan",
+      signIn: "Log Masuk",
+      demo: "Kelayakan Demo:",
+      admin: "Admin",
+      staff: "Staf",
+    },
+  }[lang];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,12 +68,24 @@ export default function AdminLogin() {
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 border border-gray-200">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full">
+              <Lock className="w-8 h-8 text-blue-700" />
+            </div>
+            <button
+              type="button"
+              onClick={() => setLang(lang === "en" ? "ms" : "en")}
+              className="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium text-gray-800"
+            >
+              {lang === "en" ? "BM" : "EN"}
+            </button>
+          </div>
           <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
             <Lock className="w-8 h-8 text-blue-700" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Admin Portal</h1>
-          <p className="text-gray-700 mt-2">MyDoctor Health Assistant</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t.portal}</h1>
+          <p className="text-gray-700 mt-2">{t.product}</p>
         </div>
 
         {/* Error Alert */}
@@ -64,7 +100,7 @@ export default function AdminLogin() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
-              Username
+              {t.username}
             </label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
@@ -83,7 +119,7 @@ export default function AdminLogin() {
 
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-              Password
+              {t.password}
             </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
@@ -105,16 +141,16 @@ export default function AdminLogin() {
             disabled={isLoading}
             className="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? "Signing in..." : "Sign In"}
+            {isLoading ? (lang === "en" ? "Signing in..." : "Sedang log masuk...") : t.signIn}
           </button>
         </form>
 
         {/* Demo Credentials Info */}
         <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-          <p className="text-xs text-gray-800 font-medium mb-2">Demo Credentials:</p>
+          <p className="text-xs text-gray-800 font-medium mb-2">{t.demo}</p>
           <div className="space-y-1 text-xs text-gray-900">
-            <p><strong>Admin:</strong> admin / MyDoctor</p>
-            <p><strong>Staff:</strong> staff / Staff@123</p>
+            <p><strong>{t.admin}:</strong> admin / MyDoctor2025!</p>
+            <p><strong>{t.staff}:</strong> staff / Staff@123</p>
           </div>
         </div>
       </div>

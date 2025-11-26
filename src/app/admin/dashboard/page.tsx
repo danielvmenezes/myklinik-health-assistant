@@ -14,6 +14,7 @@ import {
   XCircle,
   AlertCircle,
   Loader2,
+  Globe,
 } from "lucide-react";
 
 type AppointmentStatus = "Booked" | "In Progress" | "Completed" | "Cancelled";
@@ -27,6 +28,7 @@ type Appointment = {
   prefered_time?: string;
   reason: string;
   current_state?: string;
+  doctor_notes?: string;
   confirmation_message?: string;
   created_at?: string;
 };
@@ -52,6 +54,46 @@ export default function AdminDashboard() {
   const [adminName, setAdminName] = useState("");
   const [error, setError] = useState("");
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [lang, setLang] = useState<"en" | "ms">("en");
+
+  const t = {
+    en: {
+      title: "Admin Dashboard",
+      welcome: "Welcome back",
+      refresh: "Refresh",
+      logout: "Logout",
+      statsTotal: "Total Appointments",
+      statsBooked: "Booked",
+      statsInProgress: "In Progress",
+      statsCompleted: "Completed",
+      mgmtTitle: "Appointment Management",
+      noAppointments: "No appointments found",
+      patient: "Patient",
+      contact: "Contact",
+      dateTime: "Date & Time",
+      reason: "Reason",
+      status: "Status",
+      actions: "Actions",
+    },
+    ms: {
+      title: "Papan Pemuka Admin",
+      welcome: "Selamat kembali",
+      refresh: "Muat semula",
+      logout: "Log keluar",
+      statsTotal: "Jumlah Temujanji",
+      statsBooked: "Tempahan",
+      statsInProgress: "Sedang Berjalan",
+      statsCompleted: "Selesai",
+      mgmtTitle: "Pengurusan Temujanji",
+      noAppointments: "Tiada temujanji",
+      patient: "Pesakit",
+      contact: "Hubungan",
+      dateTime: "Tarikh & Masa",
+      reason: "Sebab",
+      status: "Status",
+      actions: "Tindakan",
+    },
+  }[lang];
 
   useEffect(() => {
     // Check authentication
@@ -111,6 +153,19 @@ export default function AdminDashboard() {
     }
   };
 
+  const updateDoctorNotes = async (rowId: string, doctorNotes: string) => {
+    try {
+      const response = await fetch("/api/admin/appointments", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rowId, doctorNotes }),
+      });
+      if (response.ok) {
+        await fetchAppointments();
+      }
+    } catch {}
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("adminToken");
     localStorage.removeItem("adminName");
@@ -124,26 +179,34 @@ export default function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+              <h1 className="text-2xl font-bold text-gray-900">{t.title}</h1>
               <p className="text-sm text-gray-600 mt-1">
-                Welcome back, <span className="font-medium">{adminName}</span>
+                {t.welcome}, <span className="font-medium">{adminName}</span>
               </p>
             </div>
             <div className="flex items-center gap-3">
+              <button
+                onClick={() => setLang(lang === "en" ? "ms" : "en")}
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-900 bg-gray-100 rounded-lg hover:bg-gray-200"
+                title="Language"
+              >
+                <Globe className="w-4 h-4" />
+                {lang === "en" ? "BM" : "EN"}
+              </button>
               <button
                 onClick={fetchAppointments}
                 disabled={isLoading}
                 className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50"
               >
                 <RefreshCw className={`w-4 h-4 ${isLoading ? "animate-spin" : ""}`} />
-                Refresh
+                {t.refresh}
               </button>
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800"
               >
                 <LogOut className="w-4 h-4" />
-                Logout
+                {t.logout}
               </button>
             </div>
           </div>
@@ -155,25 +218,25 @@ export default function AdminDashboard() {
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <StatCard
-            title="Total Appointments"
+            title={t.statsTotal}
             value={appointments.length}
             icon={Calendar}
             color="blue"
           />
           <StatCard
-            title="Booked"
+            title={t.statsBooked}
             value={appointments.filter((a) => a.current_state === "Booked").length}
             icon={Clock}
             color="indigo"
           />
           <StatCard
-            title="In Progress"
+            title={t.statsInProgress}
             value={appointments.filter((a) => a.current_state === "In Progress").length}
             icon={AlertCircle}
             color="yellow"
           />
           <StatCard
-            title="Completed"
+            title={t.statsCompleted}
             value={appointments.filter((a) => a.current_state === "Completed").length}
             icon={CheckCircle}
             color="green"
@@ -190,7 +253,7 @@ export default function AdminDashboard() {
         {/* Appointments Table */}
         <div className="bg-white rounded-lg shadow overflow-hidden border border-gray-200">
           <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Appointment Management</h2>
+            <h2 className="text-lg font-semibold text-gray-900">{t.mgmtTitle}</h2>
           </div>
 
           {isLoading ? (
@@ -200,7 +263,7 @@ export default function AdminDashboard() {
           ) : appointments.length === 0 ? (
             <div className="text-center py-12">
               <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-              <p className="text-gray-500">No appointments found</p>
+              <p className="text-gray-500">{t.noAppointments}</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -208,22 +271,25 @@ export default function AdminDashboard() {
                 <thead className="bg-gray-50">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Patient
+                      {t.patient}
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Contact
+                      {t.contact}
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Date & Time
+                      {t.dateTime}
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Reason
+                      {t.reason}
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
+                      {t.status}
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
+                      Doctor Notes
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {t.actions}
                     </th>
                   </tr>
                 </thead>
@@ -233,6 +299,7 @@ export default function AdminDashboard() {
                       key={appointment.ID}
                       appointment={appointment}
                       onStatusUpdate={updateAppointmentStatus}
+                      onNotesUpdate={updateDoctorNotes}
                       isUpdating={updatingId === appointment.ID}
                     />
                   ))}
@@ -282,10 +349,12 @@ function StatCard({
 function AppointmentRow({
   appointment,
   onStatusUpdate,
+  onNotesUpdate,
   isUpdating,
 }: {
   appointment: Appointment;
   onStatusUpdate: (rowId: string, status: AppointmentStatus) => void;
+  onNotesUpdate: (rowId: string, notes: string) => void;
   isUpdating: boolean;
 }) {
   const currentStatus = (appointment.current_state || "Booked") as AppointmentStatus;
@@ -322,6 +391,18 @@ function AppointmentRow({
           <StatusIcon className="w-3.5 h-3.5" />
           {currentStatus}
         </span>
+      </td>
+      <td className="px-6 py-4">
+        <textarea
+          defaultValue={appointment.doctor_notes || ""}
+          onBlur={async (e) => {
+            const notes = e.currentTarget.value;
+            await onNotesUpdate(appointment.ID, notes);
+          }}
+          placeholder="Type notes..."
+          rows={2}
+          className="w-full text-sm border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 resize-y"
+        />
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
         <select

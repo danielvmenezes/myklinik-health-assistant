@@ -71,6 +71,7 @@ export async function GET(request: NextRequest) {
         prefered_time: getVal(row.prefered_time ?? row["prefered_time"]),
         reason: getVal(row.reason ?? row["reason"]),
         current_state: getVal(row.current_state ?? row["current_state"] ?? row.appointment_status ?? row["appointment_status"]),
+        doctor_notes: getVal(row.doctor_notes ?? row["doctor_notes"]),
         confirmation_message: getVal(row.confirmation_message ?? row["confirmation_message"] ?? row.confirmation_message_en ?? row["confirmation_message_en"]),
         created_at: getVal(row.updated_at ?? row["Updated at"] ?? row.created_at ?? row["created_at"]),
       };
@@ -89,18 +90,18 @@ export async function GET(request: NextRequest) {
 // PATCH - Update appointment status
 export async function PATCH(request: NextRequest) {
   try {
-    const { rowId, status } = await request.json();
+    const { rowId, status, doctorNotes } = await request.json();
 
-    if (!rowId || !status) {
+    if (!rowId || (!status && typeof doctorNotes !== "string")) {
       return NextResponse.json(
-        { error: "Row ID and status are required" },
+        { error: "Row ID and either status or doctorNotes is required" },
         { status: 400 }
       );
     }
 
     // Validate status (align with current_state column)
     const validStatuses = ["Booked", "In Progress", "Completed", "Cancelled"];
-    if (!validStatuses.includes(status)) {
+    if (status && !validStatuses.includes(status)) {
       return NextResponse.json(
         { error: "Invalid status. Must be one of: " + validStatuses.join(", ") },
         { status: 400 }
@@ -129,7 +130,8 @@ export async function PATCH(request: NextRequest) {
         row_id: rowId,
         project_id: JAMAI_PROJECT_ID || undefined,
         data: {
-          current_state: status,
+          ...(status ? { current_state: status } : {}),
+          ...(typeof doctorNotes === "string" ? { doctor_notes: doctorNotes } : {}),
         },
       }),
     });
