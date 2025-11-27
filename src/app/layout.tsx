@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "KlinikKu | Guiding Patients, Supporting Clinics",
+  title: "Kliniku | Guiding Patients, Supporting Clinics",
   description: "Application to help clinics and patients",
 };
 
@@ -20,4 +20,5 @@ export default function RootLayout({
     </html>
   );
 }
+
 
