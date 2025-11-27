@@ -1,7 +1,8 @@
 # Demo Video and Slides
 
 Demonstration video: https://drive.google.com/file/d/1Pd_tTVpRWKLYPhgZju9oH8L8RhczQ3sD/view?usp=sharing \
-Slides: [Script Diddies PeKom Code Fest Hackathon Presentation](<Script Diddies PeKom Code Fest Hackathon Presentation.pdf>)
+Slides: [Script Diddies PeKom Code Fest Hackathon Presentation](<Script Diddies PeKom Code Fest Hackathon Presentation.pdf>) \
+Slides: https://www.canva.com/design/DAG52bckexg/z-8Zgnyo8veYYOh1wSnn9w/view?utm_content=DAG52bckexg&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h4964cb3241
 
 ---
 # Kliniku
