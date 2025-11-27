@@ -432,48 +432,6 @@ Built for **Generative AI for Malaysian Industries with JamAI Base** hackathon
 - ✅ TypeScript for type safety
 - ✅ Ready for JamAI Base integration
 
-## 📊 Sample Use Cases
-
-### Scenario 1: Pothole Report
-**User**: "Ada lubang besar kat jalan depan rumah saya"
-**Assistant**: 
-- Classifies as "pothole"
-- Retrieves MBPJ/DBKL procedure from Knowledge table
-- Provides step-by-step guide in Bahasa Malaysia
-- Includes contact numbers and expected response time
-
-### Scenario 2: Broken Streetlight
-**User**: "Streetlight not working near my house"
-**Assistant**:
-- Classifies as "streetlight"
-- Guides to report to TNB (15454)
-- Asks for pole number
-- Provides follow-up steps
-
-### Scenario 3: Illegal Parking
-**User**: "Car blocking my gate can't go out"
-**Assistant**:
-- Detects urgency
-- Provides immediate contact: DBKL Traffic / PDRM
-- Warns not to confront owner
-- Guides on photo documentation
-
-## 🔧 Customization
-
-### Adding More Councils
-Edit `src/app/api/chat/route.ts` and add council data:
-```typescript
-const councils = {
-  mbpj: { name: "MBPJ", phone: "03-7954 2020", ... },
-  dbkl: { name: "DBKL", phone: "03-2693 4433", ... },
-  // Add more...
-};
-```
-
-### Adding More Issue Types
-1. Update `ComplaintType` enum
-2. Add classification logic in `classifyComplaint()`
-3. Add procedures in `councilProcedures` object
 
 ## 📱 Screenshots
 
@@ -501,3 +459,4 @@ Focus: Civic Tech / Public Service Innovation
 
 **Live Demo**: (Add deployment URL)
 **Video Demo**: (Add video link)
+
