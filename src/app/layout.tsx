@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Council Complaint Helper | Pembantu Aduan Majlis",
-  description: "Report issues to your local council easily in English or Bahasa Malaysia",
+  title: "KlinikKu | Guiding Patients, Supporting Clinics",
+  description: "Application to help clinics and patients",
 };
 
 export default function RootLayout({
@@ -20,3 +20,4 @@ export default function RootLayout({
     </html>
   );
 }
+
